@@ -1,0 +1,70 @@
+$whiteColor: #fff;
+$backgroundH2: #e9ecef;
+$jobBackground: #F2F2F2;
+
+$shadowProperty: 0px 2px 4px 0px #cfcfcf;
+
+@mixin shadowMixin($property) {
+	-webkit-box-shadow: $property;
+	-moz-box-shadow: $property;
+	box-shadow: $property;
+}
+
+body {
+	background-color: #F2F2F2;
+	color: #333;
+
+	h2 {
+		font-size: 2rem;
+		padding: 22px;
+    	padding-bottom: 7px;
+		color: #495057;
+	}
+}
+
+.header {
+	background-color: #563d7c;
+
+	a.nav-link {
+		color: $whiteColor !important;
+		padding-left: 20px !important;
+		padding-right: 20px !important;
+	}
+
+	li.active {
+		border-bottom: 2px #fff solid;
+	}
+
+	.navbar-brand {
+		font-weight: bold;
+		color: $whiteColor;
+	}
+
+}
+
+.jumbotron {
+	@include shadowMixin($shadowProperty);
+}
+
+.job-posts {
+	background-color: $whiteColor;
+	@include shadowMixin($shadowProperty);
+	border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+
+.list-group-item {
+	border-left:0;
+	border-right:0;
+}
+
+footer {
+	a {
+		color: #333;
+	}
+}
