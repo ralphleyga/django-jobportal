@@ -17,6 +17,7 @@ class JobAdmin(admin.ModelAdmin):
     
     list_display = ('title', 'user')
     search_fields = ('title', 'description')
+    readonly_fields = ('slug',)
 
     inlines = [
         JobQuestionInline,

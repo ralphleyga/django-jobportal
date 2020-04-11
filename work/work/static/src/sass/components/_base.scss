@@ -11,19 +11,40 @@ $shadowProperty: 0px 2px 4px 0px #cfcfcf;
 }
 
 body {
-	background-color: #F2F2F2;
+	background-color: #FFF8F5;
 	color: #333;
+	font-family: helvetica neue,helvetica,Helvetica,Arial,sans-serif;
+    font-weight: 400;
 
-	h2 {
-		font-size: 2rem;
-		padding: 22px;
-    	padding-bottom: 7px;
-		color: #495057;
+	.main-content {
+		margin-top: 6em;
+	}
+
+	.btn-primary {
+		background-color: #FFB726;
+		border: 0;
+	}
+
+	.btn-primary:hover {
+		background-color: #fd7e14;
+		border: 0;
+	}
+}
+
+h5 {
+	font-weight: 300;
+	
+	strong {
+		font-weight: 450;
+	}
+
+	span {
+		color: #555;
 	}
 }
 
 .header {
-	background-color: #563d7c;
+	background-color: #FF6200;
 
 	a.nav-link {
 		color: $whiteColor !important;
@@ -38,18 +59,42 @@ body {
 	.navbar-brand {
 		font-weight: bold;
 		color: $whiteColor;
+		font-size: 2.5rem;
+		text-transform: lowercase;
+		font-weight: 300;
+		line-height: 3.125rem;
+	}
+
+	.navbar-brand:hover {
+		color: $whiteColor;
+	}
+
+	.work-logo {
+		color: #FFF8F5;
 	}
 
 }
 
 .jumbotron {
 	@include shadowMixin($shadowProperty);
+	background-color: $jobBackground;
 }
 
 .job-posts {
 	background-color: $whiteColor;
 	@include shadowMixin($shadowProperty);
 	border: 1px solid rgba(0, 0, 0, 0.125);
+
+	h2 {
+		font-size: 2rem;
+		padding: 22px;
+    	padding-bottom: 7px;
+		color: #495057;
+	}
+
+	.content {
+		padding: 20px;
+	}
 }
 
 .list-group-item:first-child {
@@ -67,4 +112,23 @@ footer {
 	a {
 		color: #333;
 	}
+}
+
+.job-sidebar {
+	background-color: $whiteColor;
+	@include shadowMixin($shadowProperty);
+
+	padding: 20px;
+	padding-top: 1px;
+
+	h4 {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+
+	.list-group-item {
+		border: 0;
+		padding: 10px;
+		padding-top: 20px;
+	}	
 }

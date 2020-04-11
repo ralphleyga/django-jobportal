@@ -1,7 +1,8 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light header">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light header">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'index' %}">djangoWork</a>
+            
+            <a class="navbar-brand" href="{% url 'index' %}">django<span class="work-logo">_work:</span></a><span class="text-light hidden-md-down">get_the_best_project</span>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -13,11 +14,11 @@
                     <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Find Work</a>
+                        <a class="nav-link" href="{% url 'jobs:browse' %}">Find Work</a>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Post a Job</a>
+                        <a class="nav-link" href="{% url 'jobs:form' %}">Post a Job</a>
                     </li>
 
                     <li class="nav-item">

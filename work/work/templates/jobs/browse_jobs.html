@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Find Work{% endblock %}
+
+{% block content %}
+<div class="row mt-10">
+
+  <div class="col-md-9">
+      <div class="job-posts">
+          <h2>Find Work</h2>
+          <div class="list-group">
+              {% include 'jobs/_job_summary.html' %}
+              {% include 'jobs/_job_summary.html' %}
+              {% include 'jobs/_job_summary.html' %}
+              {% include 'jobs/_job_summary.html' %}
+              {% include 'jobs/_job_summary.html' %}
+              {% include 'jobs/_job_summary.html' %}
+              {% include 'jobs/_job_summary.html' %}
+              {% include 'jobs/_job_summary.html' %}
+              {% include 'jobs/_job_summary.html' %}
+              {% include 'jobs/_job_summary.html' %}
+          </div>
+      </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="job-sidebar">
+        <h4>Filter</h4>
+
+        {% include 'jobs/_job_filter.html' %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="row mt-10">
+
+    <div class="col-md-9 mb-4">
+        <div class="job-posts">
+            <h2>Create New Job
+            </h2>
+            <div class="content">
+                {{ form.as_ul }}
+            </div>
+        </div>
+    </div>
+  
+    <div class="col-md-3">
+        <a href="#" class="btn btn-primary btn-lg btn-block">Save Job</a>
+        <div class="job-sidebar mt-4">
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Fixed Price</strong></li>
+                <li class="list-group-item">{% include 'jobs/_job_location.html' %}</li>
+                <li class="list-group-item">{% include 'jobs/_job_work_environment.html' %}</li>
+                <li class="list-group-item">{% include 'jobs/_job_position.html' %}</li>
+              </ul>
+        </div>
+    </div>
+  
+  </div>
+{% endblock %}

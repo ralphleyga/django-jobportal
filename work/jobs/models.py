@@ -1,5 +1,6 @@
 from django.db import models
 from django_countries.fields import CountryField
+from django.utils.text import slugify
 
 WORK_ENVIRONMENT = (
     ('remote', 'Remote'),
@@ -13,8 +14,15 @@ APPLICANT_STATUS = (
     ('interview', 'Interview')
 )
 
+PAYMENT_TYPE = (
+    ('fixed_price', 'Fixed Price'),
+    ('hourly', 'Hourly'),
+    ('monthly', 'Monthly'),
+)
+
 class Job(models.Model):
     title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=300, null=True, unique=True)
     description = models.TextField()
     
     location = models.CharField(max_length=200)
@@ -33,6 +41,11 @@ class Job(models.Model):
     draft = models.BooleanField(default=False)
 
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    
+    def save(self, **kwargs):
+        slug_str = f'{self.title}-at-{self.company}'
+        self.slug = slugify(slug_str)
+        super().save(**kwargs)
 
     def __str__(self):
         return self.title
