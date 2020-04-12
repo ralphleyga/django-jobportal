@@ -19,6 +19,7 @@ class BrowseJobsView(ListView):
     template_name = 'jobs/browse_jobs.html'
     queryset = Job.objects.filter(draft=False, archived=False).order_by('-created')
     form_class = JobFilterForm()
+    paginate_by = 10
     
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -33,6 +34,17 @@ class BrowseJobsView(ListView):
         return context_data
 
 
+class MyJobsView(BrowseJobsView):
+    template_name = 'jobs/my_jobs.html'
+    queryset = Job.objects.all().order_by('-created')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        qry = JobFilter(self.request.GET, queryset=queryset).qs
+        return qry
+
+
 class JobDetail(DetailView):
     template_name = 'jobs/job_detail.html'
     model = Job
@@ -43,7 +55,7 @@ class JobCreateView(LoginRequiredMixin, CreateView):
     model = Job
     template_name = 'jobs/job_form.html'
     form_class = JobForm
-    success_url = reverse_lazy('jobs:browse')
+    success_url = reverse_lazy('jobs:manage')
     
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -56,7 +68,7 @@ class JobUpdateView(LoginRequiredMixin, UpdateView):
     model = Job
     template_name = 'jobs/job_form.html'
     form_class = JobForm
-    success_url = reverse_lazy('jobs:browse')
+    success_url = reverse_lazy('jobs:manage')
     
     def form_valid(self, form):
         self.object = form.save(commit=False)

@@ -2,7 +2,7 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-light header">
         <div class="container">
             
-            <a class="navbar-brand" href="{% url 'index' %}">django<span class="work-logo">_work:</span></a><span class="text-light hidden-md-down">get_the_best_project</span>
+            <a class="navbar-brand" href="{% url 'index' %}">django<span class="work-logo">_work:</span></a><span class="text-light hidden-xs-down">get_the_best_project</span>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -13,21 +13,45 @@
                     <li class="nav-item active">
                     <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'jobs:browse' %}">Find Work</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'jobs:manage' %}">My Jobs</a>
                     </li>
                     
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'jobs:create' %}">Post a Job</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Register</a>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {% if request.user.first_name %}
+                                {{ request.user.first_name }}
+                            {% else %}
+                                {{ request.user.email }}
+                            {% endif %}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Update Profile</a>
+                            <a class="dropdown-item" href="#">Email Setting</a>
+                            <a class="dropdown-item" href="#">Archived Jobs</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </div>
                     </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Register</a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                    {% endif %}
 
                     {% comment %}
                     <li class="nav-item dropdown">

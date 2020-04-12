@@ -5,9 +5,15 @@
 {% block content %}
 <div class="row mt-10">
 
+  <div class="col-md-3">
+    <div class="job-sidebar">
+        <h4>Manage</h4>
+    </div>
+  </div>
+
   <div class="col-md-9">
       <div class="job-posts">
-          <h2>Find Work</h2>
+          <h2>My Jobs</h2>
 
           <div class="list-group">
             {% for job in object_list %}
@@ -40,14 +46,6 @@
 
           </div>
       </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="job-sidebar">
-        <h4>Filter</h4>
-
-        {% include 'jobs/_job_filter.html' %}
-    </div>
   </div>
 
 </div>

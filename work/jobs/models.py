@@ -38,6 +38,7 @@ class Job(models.Model):
 
     work_environment = models.CharField(choices=WORK_ENVIRONMENT, max_length=50)
     position = models.CharField(choices=POSITION_TYPE, max_length=50, null=True)
+    payment = models.CharField(max_length=200, null=True, choices=PAYMENT_TYPE)
     salary_range = models.CharField(max_length=200, blank=True, null=True)
 
     company = models.CharField(max_length=200, null=True)
