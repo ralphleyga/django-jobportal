@@ -25,6 +25,8 @@
         <div class="col-md-3">
             {% if request.user == job.user %}
                 <a href="{% url 'jobs:update' job.slug %}" class="btn btn-primary btn-lg btn-block">Edit Job</a>
+
+                <a href="{% url 'jobs:detail' object.slug %}" class="btn btn-block btn-lg" data-toggle="modal" data-target="#archivedModal">{% if object.archived %}Restore{% else %}Archive{% endif %}</a>
             {% else %}
                 <a href="{{ job.job_link }}" class="btn btn-primary btn-lg btn-block">Submit Application</a>
             {% endif %}
@@ -49,5 +51,8 @@
         </div>
     
     </div>
+
+    {% include 'jobs/_job_confirm_archived.html' %}
+    
 {% endwith %}
 {% endblock %}
