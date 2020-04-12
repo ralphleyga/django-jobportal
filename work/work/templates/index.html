@@ -2,6 +2,12 @@
 
 {% block title %}#1 Python Job Posting Space for Pythonista{% endblock %}
 
+{% block meta_tags %}
+  {% with meta_description="Get the right Python jobs for you" meta_title="django_work: #1 Python Job Posting Space for Pythonista" %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock %}
+
 {% block content %}
 
 <div class="jumbotron">

@@ -6,6 +6,8 @@ from django.views.generic import (
     CreateView,
     UpdateView
     )
+from django.http import HttpResponseRedirect
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -48,7 +50,20 @@ class MyJobsView(BrowseJobsView):
 class JobDetail(DetailView):
     template_name = 'jobs/job_detail.html'
     model = Job
-    queryset = Job.objects.filter(archived=False, draft=False)
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        
+        if obj.user == self.request.user:
+            return obj
+        
+        if obj.draft:
+            raise Http404
+        
+        if obj.archived:
+            raise Http404
+
+        return obj
 
 
 class JobCreateView(LoginRequiredMixin, CreateView):
@@ -82,17 +97,10 @@ class JobUpdateView(LoginRequiredMixin, UpdateView):
         return queryset
 
 class JobArchiveView(LoginRequiredMixin, JobDetail):
-    queryset = Job.objects.all()
-
-    def get_queryset(self):
-        """Job owner can archive/restore 
-        """
-        queryset = super().get_queryset()
-        queryset = queryset.filter(user=self.request.user)
-        return queryset
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
+        # import pdb; pdb.set_trace()
         
         if self.object.archived:
             self.object.archived = False
@@ -100,5 +108,4 @@ class JobArchiveView(LoginRequiredMixin, JobDetail):
             self.object.archived = True
 
         self.object.save()
-        context = self.get_context_data(object=self.object)
-        return self.render_to_response(context)
+        return HttpResponseRedirect(reverse_lazy('jobs:detail', kwargs={'slug': self.object.slug}))

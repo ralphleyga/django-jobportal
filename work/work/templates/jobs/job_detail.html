@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}{{ job.title }} at {{ job.company }}{% endblock %}
+
+{% block meta_tags %}
+  {% with meta_description=job.description meta_title=job.full_title %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock %}
 
 {% block content %}
 {% with object as job %}
@@ -30,10 +36,14 @@
 
             <div class="job-sidebar mt-4">
                 <ul class="list-group">
-                    <li class="list-group-item"><strong>Fixed Price</strong></li>
+                    <li class="list-group-item"><strong>{{ job.get_payment_display }}</strong></li>
                     <li class="list-group-item">{% include 'jobs/_job_location.html' %}</li>
                     <li class="list-group-item">{% include 'jobs/_job_work_environment.html' %}</li>
                     <li class="list-group-item">{% include 'jobs/_job_position.html' %}</li>
+
+                    {% if job.salary_range %}
+                        <li class="list-group-item"><strong>$</strong> {{ job.salary_range }}</li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

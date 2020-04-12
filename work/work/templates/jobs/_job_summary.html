@@ -1,7 +1,12 @@
 <a href="{% url 'jobs:detail' job.slug %}" class="list-group-item list-group-item-action pt-4 pb-4">
     <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-3"><strong>{{ job.title }}</strong> <span>at</span> <strong>{{ job.company }}</strong>.</h5>
-        <small>3 days ago</small>
+        <p>
+        <small>
+            3 days ago
+        </small>
+            {% if job.archived %}<br/><span class="badge badge-info">Archived</span>{% endif %}
+    </p>
     </div>
 
     <p>Magna pulvinar parturient sociosqu ligula. Taciti vehicula fusce sit ullamcorper convallis sodales scelerisque class. Habitant facilisis nam ex libero semper. Posuere ornare quisque ante fermentum. Condimentum nullam euismod risus vitae scelerisque vehicula.</p>

@@ -8,10 +8,17 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>django_work: {% block title %}{% endblock %}</title>
 
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>django_work: {% block title %}{% endblock %}</title>
+        
+        {% block meta_tags %}
+            <meta name="description" content="{{ meta_description }}">
+            <meta name="og:title" property="og:title" content="{{ meta_title }}">
+            <meta name="og:description" property="og:description" content="{{ meta_description }}">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% endblock %}
+
+        <meta name="robots" content="django, python, web development, flask, pandas, javascript, full stack, linux, celery">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
         <link rel="stylesheet" href="{% static 'css/style.css' %}" />

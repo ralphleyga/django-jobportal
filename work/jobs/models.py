@@ -56,6 +56,9 @@ class Job(models.Model):
         slug_str = f'{self.title}-at-{self.company}'
         self.slug = slugify(slug_str)
         super().save(**kwargs)
+        
+    def full_title(self):
+        return f'{self.title} at {self.company}'
 
     def __str__(self):
         return self.title
