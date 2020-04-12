@@ -39,12 +39,6 @@ class JobDetail(DetailView):
     queryset = Job.objects.filter(archived=False, draft=False)
 
 
-class JobFormView(FormView):
-    template_name = 'jobs/job_form.html'
-    form_class = JobForm
-    success_url = '/thanks/'
-
-
 class JobCreateView(LoginRequiredMixin, CreateView):
     model = Job
     template_name = 'jobs/job_form.html'
@@ -74,3 +68,25 @@ class JobUpdateView(LoginRequiredMixin, UpdateView):
         queryset = super().get_queryset()
         queryset = queryset.filter(user=self.request.user)
         return queryset
+
+class JobArchiveView(LoginRequiredMixin, JobDetail):
+    queryset = Job.objects.all()
+
+    def get_queryset(self):
+        """Job owner can archive/restore 
+        """
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        
+        if self.object.archived:
+            self.object.archived = False
+        else:
+            self.object.archived = True
+
+        self.object.save()
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)

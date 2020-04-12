@@ -7,28 +7,61 @@
     {% csrf_token %}
     <div class="col-md-9 mb-4">
         <div class="job-form">
-            <h2>Create New Job
+            <h2>
+                {% if object %}Update{% else %}Create New{% endif %} Job
             </h2>
             <div class="form">
                 {% for field in form.visible_fields %}
                     {% include 'utils/_field.html' with field=field  %}
                 {% endfor %}
+
+                <div class="text-center mt-5">
+                    <button type="submit" class="btn btn-primary btn-lg">Save Job</button>
+
+                    {% if object %}
+                        <a href="{% url 'jobs:detail' object.slug %}" class="btn ">Cancel</a>
+                    {% else %}
+                        <a href="{% url 'jobs:browse' %}" class="btn ">Cancel</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
   
     <div class="col-md-3">
         <button type="submit" class="btn btn-primary btn-lg btn-block">Save Job</button>
-        <a href="{% url 'jobs:browse' %}" class="btn btn-block">Cancel</a>
-        <div class="job-sidebar mt-4">
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Fixed Price</strong></li>
-                <li class="list-group-item">{% include 'jobs/_job_location.html' %}</li>
-                <li class="list-group-item">{% include 'jobs/_job_work_environment.html' %}</li>
-                <li class="list-group-item">{% include 'jobs/_job_position.html' %}</li>
-                <li class="list-group-item"><strong>$</strong> 1000-2000</li>
-              </ul>
-        </div>
+
+        {% if object %}
+            <a href="{% url 'jobs:detail' object.slug %}" class="btn btn-block">Cancel</a>
+
+            <a href="{% url 'jobs:detail' object.slug %}" class="btn btn-block" data-toggle="modal" data-target="#archivedModal">{% if object.archived %}Restore{% else %}Archive{% endif %}</a>
+        {% else %}
+            <a href="{% url 'jobs:browse' %}" class="btn btn-block">Cancel</a>
+        {% endif %}
+
     </div>
 </form>
+
+{% if request.user.is_authenticated %}
+    <!-- Modal -->
+    <div class="modal fade" id="archivedModal" tabindex="-1" role="dialog" aria-labelledby="archivedModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="archivedModalLabel">Warning!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to {% if object.archive %}Archive{% else %}Restore{% endif %} the job "{{ object.title }}"
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{% url 'jobs:archive' object.slug %}" class="btn btn-primary">Confirm {% if object.archived %}Restore{% else %}Archive{% endif %}</a>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endif %}
 {% endblock %}
