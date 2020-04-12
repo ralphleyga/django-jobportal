@@ -100,7 +100,9 @@ class JobArchiveView(LoginRequiredMixin, JobDetail):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        # import pdb; pdb.set_trace()
+        
+        if self.object.user != request.user:
+            raise Http404
         
         if self.object.archived:
             self.object.archived = False
