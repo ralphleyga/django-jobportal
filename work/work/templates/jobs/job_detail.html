@@ -3,33 +3,35 @@
 {% block title %}Welcome{% endblock %}
 
 {% block content %}
-<div class="row mt-10">
+{% with object as job %}
+    <div class="row mt-10">
 
-    <div class="col-md-9 mb-4">
-        <div class="job-posts">
-            <h2>List group item heading at Google Inc.
-            </h2>
-            <div class="content">
-                <p>Magna pulvinar parturient sociosqu ligula. Taciti vehicula fusce sit ullamcorper convallis sodales scelerisque class. Habitant facilisis nam ex libero semper. Posuere ornare quisque ante fermentum. Condimentum nullam euismod risus vitae scelerisque vehicula.</p>
-
-                <p>Magna pulvinar parturient sociosqu ligula. Taciti vehicula fusce sit ullamcorper convallis sodales scelerisque class. Habitant facilisis nam ex libero semper. Posuere ornare quisque ante fermentum. Condimentum nullam euismod risus vitae scelerisque vehicula.</p>
-
-                <p>Magna pulvinar parturient sociosqu ligula. Taciti vehicula fusce sit ullamcorper convallis sodales scelerisque class. Habitant facilisis nam ex libero semper. Posuere ornare quisque ante fermentum. Condimentum nullam euismod risus vitae scelerisque vehicula.</p> 
+        <div class="col-md-9 mb-4">
+            <div class="job-posts">
+                <h2>{{ job.title }} at {{ job.company }}
+                </h2>
+                <div class="content">
+                    {{ object.description|linebreaks }}
+                </div>
             </div>
         </div>
-    </div>
-  
-    <div class="col-md-3">
-        <a href="#" class="btn btn-primary btn-lg btn-block">Submit Application</a>
-        <div class="job-sidebar mt-4">
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Fixed Price</strong></li>
-                <li class="list-group-item">{% include 'jobs/_job_location.html' %}</li>
-                <li class="list-group-item">{% include 'jobs/_job_work_environment.html' %}</li>
-                <li class="list-group-item">{% include 'jobs/_job_position.html' %}</li>
-              </ul>
+    
+        <div class="col-md-3">
+            {% if request.user == job.user %}
+                <a href="{% url 'jobs:update' job.slug %}" class="btn btn-primary btn-lg btn-block">Edit Job</a>
+            {% else %}
+                <a href="{{ job.job_link }}" class="btn btn-primary btn-lg btn-block">Submit Application</a>
+            {% endif %}
+            <div class="job-sidebar mt-4">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Fixed Price</strong></li>
+                    <li class="list-group-item">{% include 'jobs/_job_location.html' %}</li>
+                    <li class="list-group-item">{% include 'jobs/_job_work_environment.html' %}</li>
+                    <li class="list-group-item">{% include 'jobs/_job_position.html' %}</li>
+                </ul>
+            </div>
         </div>
+    
     </div>
-  
-  </div>
+{% endwith %}
 {% endblock %}

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'django_countries',
+    'widget_tweaks',
+    'django_filters',
 
     'users.apps.UsersConfig',
     'jobs.apps.JobsConfig',

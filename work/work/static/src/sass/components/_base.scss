@@ -10,6 +10,12 @@ $shadowProperty: 0px 2px 4px 0px #cfcfcf;
 	box-shadow: $property;
 }
 
+@mixin boxBg {
+	background-color: $whiteColor;
+	@include shadowMixin($shadowProperty);
+	border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
 body {
 	background-color: #FFF8F5;
 	color: #333;
@@ -82,7 +88,7 @@ h5 {
 
 .job-posts {
 	background-color: $whiteColor;
-	@include shadowMixin($shadowProperty);
+	@include boxBg;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 
 	h2 {
@@ -116,7 +122,7 @@ footer {
 
 .job-sidebar {
 	background-color: $whiteColor;
-	@include shadowMixin($shadowProperty);
+	@include boxBg;
 
 	padding: 20px;
 	padding-top: 1px;
@@ -131,4 +137,18 @@ footer {
 		padding: 10px;
 		padding-top: 20px;
 	}	
+}
+
+.job-form {
+	@include boxBg;
+	padding: 20px;
+
+	.form {
+		padding: 2em;
+		padding-top: 0;
+
+		.form-group {
+			margin-top: 3em;
+		}
+	}
 }

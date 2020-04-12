@@ -20,6 +20,14 @@ PAYMENT_TYPE = (
     ('monthly', 'Monthly'),
 )
 
+POSITION_TYPE = (
+    ('constractor', 'Contractor'),
+    ('employee', 'Employee'),
+    ('monthly', 'Monthly'),
+    ('intern', 'Intern'),
+    ('freelancer', 'Freelancer'),
+)
+
 class Job(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=300, null=True, unique=True)
@@ -29,6 +37,7 @@ class Job(models.Model):
     country = CountryField(null=True)
 
     work_environment = models.CharField(choices=WORK_ENVIRONMENT, max_length=50)
+    position = models.CharField(choices=POSITION_TYPE, max_length=50, null=True)
     salary_range = models.CharField(max_length=200, blank=True, null=True)
 
     company = models.CharField(max_length=200, null=True)

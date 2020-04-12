@@ -3,29 +3,32 @@
 {% block title %}Welcome{% endblock %}
 
 {% block content %}
-<div class="row mt-10">
-
+<form class="row mt-10" method="POST" action=".">
+    {% csrf_token %}
     <div class="col-md-9 mb-4">
-        <div class="job-posts">
+        <div class="job-form">
             <h2>Create New Job
             </h2>
-            <div class="content">
-                {{ form.as_ul }}
+            <div class="form">
+                {% for field in form.visible_fields %}
+                    {% include 'utils/_field.html' with field=field  %}
+                {% endfor %}
             </div>
         </div>
     </div>
   
     <div class="col-md-3">
-        <a href="#" class="btn btn-primary btn-lg btn-block">Save Job</a>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Save Job</button>
+        <a href="{% url 'jobs:browse' %}" class="btn btn-block">Cancel</a>
         <div class="job-sidebar mt-4">
             <ul class="list-group">
                 <li class="list-group-item"><strong>Fixed Price</strong></li>
                 <li class="list-group-item">{% include 'jobs/_job_location.html' %}</li>
                 <li class="list-group-item">{% include 'jobs/_job_work_environment.html' %}</li>
                 <li class="list-group-item">{% include 'jobs/_job_position.html' %}</li>
+                <li class="list-group-item"><strong>$</strong> 1000-2000</li>
               </ul>
         </div>
     </div>
-  
-  </div>
+</form>
 {% endblock %}

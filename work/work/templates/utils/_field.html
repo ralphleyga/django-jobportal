@@ -1,0 +1,9 @@
+{% load widget_tweaks %}
+
+<div class="form-group row">
+    <label for="{{ field.id_for_label }}" class="col-sm-2 col-form-label">{{ field.label }} {% if field.field.required %}*{% endif %}</label>
+    <div class="col-sm-10">
+        {{ field.error }}
+        {{ field|add_class:"form-control" }}
+    </div>
+</div>
