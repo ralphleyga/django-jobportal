@@ -35,6 +35,14 @@ body {
 		background-color: #fd7e14;
 		border: 0;
 	}
+
+	a {
+		color: #fd7e14;
+	}
+
+	a:hover, a:active {
+		color: #fd7e14;
+	}
 }
 
 h5 {
@@ -101,18 +109,19 @@ h5 {
 	.content {
 		padding: 20px;
 	}
+
+	.list-group-item:first-child {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+	
+	
+	.list-group-item {
+		border-left:0;
+		border-right:0;
+	}
 }
 
-.list-group-item:first-child {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
-
-.list-group-item {
-	border-left:0;
-	border-right:0;
-}
 
 footer {
 	a {
@@ -136,7 +145,24 @@ footer {
 		border: 0;
 		padding: 10px;
 		padding-top: 20px;
-	}	
+	}
+
+	.job-manage {
+		.active {
+			background: transparent;
+			font-weight: 600;
+
+			a {
+				color: #555;
+			}
+		}
+
+		.list-group-item {
+			border: 0;
+			margin-top: 1em;
+			padding: 0;
+		}
+	}
 }
 
 .job-form {

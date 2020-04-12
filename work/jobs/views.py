@@ -38,7 +38,7 @@ class BrowseJobsView(ListView):
 
 class MyJobsView(BrowseJobsView):
     template_name = 'jobs/my_jobs.html'
-    queryset = Job.objects.all().order_by('-created')
+    queryset = Job.objects.filter(archived=False).order_by('-created')
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -110,4 +110,4 @@ class JobArchiveView(LoginRequiredMixin, JobDetail):
             self.object.archived = True
 
         self.object.save()
-        return HttpResponseRedirect(reverse_lazy('jobs:detail', kwargs={'slug': self.object.slug}))
+        return HttpResponseRedirect(reverse_lazy('jobs:manage'))

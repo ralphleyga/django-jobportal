@@ -7,7 +7,11 @@
 
   <div class="col-md-3">
     <div class="job-sidebar">
-        <h4>Manage</h4>
+        <ul class="list-group job-manage">
+            <li class="list-group-item active"><a href="{% url 'jobs:manage' %}">Posted Jobs</a></li>
+            <li class="list-group-item"><a href="#">Closed Jobs</a></li>
+            <li class="list-group-item"><a href="#">Archived Jobs</a></li>
+        </ul>
     </div>
   </div>
 
