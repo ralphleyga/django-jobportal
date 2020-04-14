@@ -1,6 +1,13 @@
 $whiteColor: #fff;
 $backgroundH2: #e9ecef;
 $jobBackground: #F2F2F2;
+$btnColor: #FFB726;
+
+// font-sizes
+$headerFont: 1.5em;
+$subHeaderFont: 2em;
+$font: 1em;
+$sidebar: 0.9em;
 
 $shadowProperty: 0px 2px 4px 0px #cfcfcf;
 
@@ -19,8 +26,19 @@ $shadowProperty: 0px 2px 4px 0px #cfcfcf;
 body {
 	background-color: #FFF8F5;
 	color: #333;
-	font-family: helvetica neue,helvetica,Helvetica,Arial,sans-serif;
-    font-weight: 400;
+	font-family: Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+	font-weight: 400;
+	font-size: $font;
+
+	h2 {
+		font-size: $headerFont;
+	}
+
+	h3 {
+		font-size: $font;
+		font-weight: 700;
+		color: #333;
+	}
 
 	.main-content {
 		margin-top: 6em;
@@ -37,11 +55,12 @@ body {
 	}
 
 	a {
-		color: #fd7e14;
+		color: #0366d6;
 	}
 
 	a:hover, a:active {
-		color: #fd7e14;
+		color: #0366d6;
+		text-decoration: underline;
 	}
 }
 
@@ -58,25 +77,30 @@ h5 {
 }
 
 .header {
-	background-color: #FF6200;
+	background-color: #24292e;
 
 	a.nav-link {
 		color: $whiteColor !important;
-		padding-left: 20px !important;
-		padding-right: 20px !important;
+		padding-left: 1.2em !important;
+		padding-right: 1.2em !important;
+		font-weight: 600;
+		font-size: 0.8em;
+	}
+
+	a.nav-link:hover {
+		color: $backgroundH2 !important;
 	}
 
 	li.active {
-		border-bottom: 2px #fff solid;
+		border-bottom: 0.1em #fff solid;
 	}
 
 	.navbar-brand {
 		font-weight: bold;
 		color: $whiteColor;
-		font-size: 2.5rem;
+		font-size: $headerFont;
 		text-transform: lowercase;
 		font-weight: 300;
-		line-height: 3.125rem;
 	}
 
 	.navbar-brand:hover {
@@ -85,6 +109,7 @@ h5 {
 
 	.work-logo {
 		color: #FFF8F5;
+		font-weight: 600;
 	}
 
 }
@@ -98,16 +123,16 @@ h5 {
 	background-color: $whiteColor;
 	@include boxBg;
 	border: 1px solid rgba(0, 0, 0, 0.125);
+	font-size: $font;
 
 	h2 {
-		font-size: 2rem;
 		padding: 22px;
     	padding-bottom: 7px;
 		color: #495057;
 	}
 
 	.content {
-		padding: 20px;
+		padding: 2em;
 	}
 
 	.list-group-item:first-child {
@@ -119,6 +144,21 @@ h5 {
 	.list-group-item {
 		border-left:0;
 		border-right:0;
+		padding-bottom: 0;
+	}
+
+	.nav-item{
+		.active {
+			background-color: #cfcfcf;
+		}
+		a.active:hover {
+			color:$whiteColor;
+		}
+
+		:hover {
+			font-weight: 700;
+		}
+		
 	}
 }
 
@@ -132,19 +172,11 @@ footer {
 .job-sidebar {
 	background-color: $whiteColor;
 	@include boxBg;
+	font-size: $sidebar;
 
-	padding: 20px;
-	padding-top: 1px;
-
-	h4 {
+	h3 {
 		margin-top: 20px;
 		margin-bottom: 20px;
-	}
-
-	.list-group-item {
-		border: 0;
-		padding: 10px;
-		padding-top: 20px;
 	}
 
 	.job-manage {
@@ -157,24 +189,48 @@ footer {
 			}
 		}
 
-		.list-group-item {
-			border: 0;
-			margin-top: 1em;
-			padding: 0;
+		.list-group-item:first-child, .list-group-item:last-child {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+			border-bottom-left-radius: 0 !important;
+    		border-bottom-right-radius: 0 !important;
 		}
+
+		.list-group-item {
+			border-right: 0;
+			border-left: 0;
+		}
+
+		.list-group-item:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	.profile {
+		.avatar {
+			border: 1px solid rgba(0, 0, 0, 0.125);
+			text-align: center;
+			height: 2em;
+			width: 2em;
+			font-size: 3em;
+			vertical-align: middle;
+			padding-top: 12px;
+			border-radius: 4em;
+			font-weight: 700;
+			color: #FFB726;
+		}
+	}
+
+	.filter {
+		padding: 2em;
 	}
 }
 
 .job-form {
-	@include boxBg;
-	padding: 20px;
+	padding: 4em;
+	padding-top: 0;
 
-	.form {
-		padding: 2em;
-		padding-top: 0;
-
-		.form-group {
-			margin-top: 3em;
-		}
+	.form-group {
+		margin-top: 3em;
 	}
 }

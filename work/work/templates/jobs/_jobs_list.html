@@ -1,0 +1,43 @@
+<ul class="list-group list-group-flush ml-4 mr-4">
+    {% for job in jobs %}
+    <li class="list-group-item">
+        <a href="{% url 'jobs:detail' job.slug %}">{{ job.title }} at {{ job.company }}</a>
+        {% if job.draft %}<span class="badge badge-info">DRAFT</span>{% endif %}
+        {% if job.closed %}<span class="badge badge-info">CLOSED</span>{% endif %}
+        <small>
+            {{ job.created|timesince }}
+        </small>
+
+        <p class="float-right" style="margin: 0; padding: 0;">
+            <div class="dropdown mr-auto btn-xs float-right">
+                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownJob{{ job.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Update
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownJob{{ job.id }}">
+                    <a href="{% url 'jobs:update' job.slug %}" class="dropdown-item">Edit</button>
+
+                    <a href="{% url 'jobs:archive' job.slug %}" class="dropdown-item">
+                        {% if job.archived %}Restore{% else %}Archived{% endif %}
+                    </a>
+                    
+                    <a href="{% url 'jobs:draft' job.slug %}" class="dropdown-item">
+                        {% if job.draft %}
+                            Publish
+                        {% else %}
+                            Set to Draft
+                        {% endif %}
+                    </a>
+
+                    <a href="{% url 'jobs:status' job.slug %}" class="dropdown-item">
+                        {% if job.closed %}
+                            Open
+                        {% else %}
+                            Close
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </p>
+    </li>
+    {% endfor %}
+    </ul>

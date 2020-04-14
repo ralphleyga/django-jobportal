@@ -1,56 +1,39 @@
-{% extends 'base.html' %}
+{% extends 'jobs/job_base.html' %}
 
-{% block title %}Find Work{% endblock %}
+{% block title %}My Jobs{% endblock %}
 
-{% block content %}
-<div class="row mt-10">
+{% block job_content %}
+    <div class="job-posts">
+        <div class="row">
+        <div class="col-md-4">
+            <h2>My Jobs</h2>
+        </div>
 
-  <div class="col-md-3">
-    <div class="job-sidebar">
-        <ul class="list-group job-manage">
-            <li class="list-group-item active"><a href="{% url 'jobs:manage' %}">Posted Jobs</a></li>
-            <li class="list-group-item"><a href="#">Closed Jobs</a></li>
-            <li class="list-group-item"><a href="#">Archived Jobs</a></li>
-        </ul>
+        {% include 'jobs/_job_manage_menu.html' with jobs=object_list %}
     </div>
-  </div>
+    
+    {% include 'jobs/_jobs_list.html' with jobs=object_list %}
 
-  <div class="col-md-9">
-      <div class="job-posts">
-          <h2>My Jobs</h2>
+    <div class="container d-flex justify-content-center mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a href="?page=1" class="page-link">&laquo; first</a>
+                </li>
+                <li class="page-item">
+                    <a href="?page={{ page_obj.previous_page_number }}"  class="page-link">previous</a>
+                </li>
+            {% endif %}
+            <li class="page-item">
+                <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
 
-          <div class="list-group">
-            {% for job in object_list %}
-              {% include 'jobs/_job_summary.html' with job=job %}
-            {% endfor %}
-
-            
-            <div class="container d-flex justify-content-center mt-4">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a href="?page=1" class="page-link">&laquo; first</a>
-                        </li>
-                        <li class="page-item">
-                            <a href="?page={{ page_obj.previous_page_number }}"  class="page-link">previous</a>
-                        </li>
-                    {% endif %}
-                    <li class="page-item">
-                        <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-
-                    </li>
-                    {% if page_obj.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
-                    {% endif %}
-                    </ul>
-                </nav>
-            </div>
-
-          </div>
-      </div>
-  </div>
-
-</div>
+            </li>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+            {% endif %}
+            </ul>
+        </nav>
+    </div>
 {% endblock %}

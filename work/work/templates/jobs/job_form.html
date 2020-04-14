@@ -1,46 +1,35 @@
-{% extends 'base.html' %}
+{% extends 'jobs/job_base.html' %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}{% if object %}Update Job{% else %}Create Job{% endif %}{% endblock %}
 
-{% block content %}
-<form class="row mt-10" method="POST" action=".">
-    {% csrf_token %}
-    <div class="col-md-9 mb-4">
+{% block job_content %}
+    <form method="POST" action=".">
+        {% csrf_token %}
+        <div class="job-posts">
+            <div class="row">
+            <div class="col-md-4">
+                <h2>My Jobs</h2>
+            </div>
+    
+            {% include 'jobs/_job_manage_menu.html' %}
+        </div>
+
         <div class="job-form">
-            <h2>
-                {% if object %}Update{% else %}Create New{% endif %} Job
-            </h2>
-            <div class="form">
-                {% for field in form.visible_fields %}
-                    {% include 'utils/_field.html' with field=field  %}
-                {% endfor %}
+            
+            {% for field in form.visible_fields %}
+                {% include 'utils/_field.html' with field=field  %}
+            {% endfor %}
 
-                <div class="text-center mt-5">
-                    <button type="submit" class="btn btn-primary btn-lg">Save Job</button>
+            <div class="text-center mt-5">
+                <button type="submit" class="btn btn-primary btn-lg">Save</button>
 
-                    {% if object %}
-                        <a href="{% url 'jobs:detail' object.slug %}" class="btn ">Cancel</a>
-                    {% else %}
-                        <a href="{% url 'jobs:browse' %}" class="btn ">Cancel</a>
-                    {% endif %}
-                </div>
+                {% if object %}
+                    <a href="{% url 'jobs:detail' object.slug %}" class="btn ">Cancel</a>
+                {% else %}
+                    <a href="{% url 'jobs:manage' %}" class="btn ">Cancel</a>
+                {% endif %}
             </div>
         </div>
-    </div>
-  
-    <div class="col-md-3">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Save Job</button>
-
-        {% if object %}
-            <a href="{% url 'jobs:detail' object.slug %}" class="btn btn-block">Cancel</a>
-
-            <a href="{% url 'jobs:detail' object.slug %}" class="btn btn-block" data-toggle="modal" data-target="#archivedModal">{% if object.archived %}Restore{% else %}Archive{% endif %}</a>
-        {% else %}
-            <a href="{% url 'jobs:browse' %}" class="btn btn-block">Cancel</a>
-        {% endif %}
-
-    </div>
-</form>
-
-{% include 'jobs/_job_confirm_archived.html' with job=object %}
+    </form>
+    {% include 'jobs/_job_confirm_archived.html' with job=object %}
 {% endblock %}

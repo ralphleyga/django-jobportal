@@ -1,0 +1,17 @@
+{% extends 'jobs/job_base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block job_content %}
+    <div class="job-posts">
+        <div class="row">
+        <div class="col-md-4">
+            <h2>Posted Jobs</h2>
+        </div>
+
+        {% include 'jobs/_job_manage_menu.html' %}
+    </div>
+        
+    {% include 'jobs/_jobs_list.html' with jobs=jobs %}
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="col-md-8">
+    <ul class="nav nav-pills mt-3 float-right mr-4">
+        <li class="nav-item">
+            <a class="nav-link {% if is_manage %}active{% endif %}" href="{% url 'jobs:manage' %}">All Jobs</a>
+            </li>
+        <li class="nav-item">
+            <a class="nav-link {% if is_create %}active{% endif %}" href="{% url 'jobs:create' %}">Create</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link {% if is_archived %}active{% endif %}" href="{% url 'jobs:archived' %}">Archived</a>
+        </li>
+    </ul>
+</div>

@@ -6,7 +6,7 @@ class JobForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = '__all__'
-        exclude = ('user', 'archived', 'slug')
+        exclude = ('user', 'archived', 'slug', 'closed')
         
 
 class JobFilterForm(forms.ModelForm):

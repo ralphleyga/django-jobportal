@@ -1,0 +1,16 @@
+<div class="job-sidebar mb-4">
+    <div class="profile mt-4">
+        <div class="avatar mx-auto">
+            RL
+        </div>
+
+        <p class="mt-2 text-center"><strong>{{ request.user.get_full_name }}</strong></p>
+    </div>
+
+    <ul class="list-group  list-group-flush job-manage">
+        <li class="list-group-item"><a href="#">Profile</a></li>
+        <li class="list-group-item"><a href="{% url 'jobs:manage' %}">My Jobs</a></li>
+        <li class="list-group-item"><a href="#">Applications</a></li>
+        <li class="list-group-item"><a href="#">Settings</a></li>
+    </ul>
+</div>

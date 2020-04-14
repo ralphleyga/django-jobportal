@@ -18,12 +18,13 @@ from django.urls import path
 from django.conf.urls import include, url
 from django.conf import settings
 
-from users.views import IndexView
+from users.views import IndexView, DashboardView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
 
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('jobs/', include('jobs.urls')),
     
     path('', IndexView.as_view(), name='index'),

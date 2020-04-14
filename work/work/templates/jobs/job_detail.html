@@ -14,30 +14,77 @@
 
         <div class="col-md-9 mb-4">
             <div class="job-posts">
-                <h2>{{ job.title }} at {{ job.company }}
+                <h2>{{ job.title }} at {{ job.company }} {% if job.closed %}[Closed] {% endif %}  {% if job.archived %}[Archived]{% endif %}
                 </h2>
                 <div class="content">
-                    {{ object.description|linebreaks }}
+                    {{ job.description|linebreaks }}
+
+                    {% if job.jobquestion_set.all %}
+                    <h3 class="mt-5">Questions</h3>
+
+                    {% if job.user == request.user %}
+                        <a href="{% url 'jobs:question_create' job.slug %}" class="btn btn-primary" data-toggle="modal" data-target="#ajaxModal" onclick="return openAjaxModal('{% url 'jobs:question_create' job.slug %}')">Add Question</a>
+                    {% endif %}
+
+                    <ul class="list-group list-group-flush">
+                        {% for question in job.jobquestion_set.all %}
+                        <li  class="list-group-item d-flex">
+                            {% if job.user == request.user %}
+                            <small><a href="#" class="mr-2" data-toggle="modal" data-target="#ajaxModal" onclick="return openAjaxModal('{% url 'jobs:question_update' job.slug question.id %}')">Edit</a>
+                            &middot;<a href="{% url 'jobs:question_delete' job.slug question.id %}" class="ml-2 mr-2" onclick="return confirm('Are you sure want to delete the question?');">Delete</a></small>
+                            &middot; 
+                            {% endif %}
+                            {{ question.question }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
             </div>
         </div>
     
         <div class="col-md-3">
-            {% if request.user == job.user %}
-                <a href="{% url 'jobs:update' job.slug %}" class="btn btn-primary btn-lg btn-block">Edit Job</a>
 
-                <a href="{% url 'jobs:detail' object.slug %}" class="btn btn-block btn-lg" data-toggle="modal" data-target="#archivedModal">{% if object.archived %}Restore{% else %}Archive{% endif %}</a>
+            {% if request.user == job.user %}
+                <div class="dropdown mr-auto">
+                    <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="dropdownJob{{ job.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Update
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownJob{{ job.id }}">
+                        <a href="{% url 'jobs:update' job.slug %}" class="dropdown-item">Edit</button>
+
+                        <a href="{% url 'jobs:archive' job.slug %}" data-toggle="modal" data-target="#archivedModal" class="dropdown-item">
+                            {% if job.archived %}Restore{% else %}Archived{% endif %}
+                        </a>
+                        
+                        <a href="{% url 'jobs:draft' job.slug %}" class="dropdown-item">
+                            {% if job.draft %}
+                                Publish
+                            {% else %}
+                                Set to Draft
+                            {% endif %}
+                        </a>
+
+                        <a href="{% url 'jobs:status' job.slug %}" class="dropdown-item">
+                            {% if job.closed %}
+                                Open
+                            {% else %}
+                                Close
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+
+                <a href="#" class="btn btn-block btn-info mt-2"  data-toggle="modal" data-target="#ajaxModal" onclick="return openAjaxModal('{% url 'jobs:question_create' job.slug %}')">Add Questions</a>
+
+                <a href="{% url 'jobs:detail' object.slug %}" class="btn btn-block btn-info mt-2">View Applications</a>
+
             {% else %}
-                <a href="{{ job.job_link }}" class="btn btn-primary btn-lg btn-block">Submit Application</a>
+                <a href="#" class="btn btn-primary btn-lg btn-block">Submit Application</a>
             {% endif %}
-                <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-lg btn-block">
-                    <svg class="bi bi-caret-left-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 00-1.659-.753l-5.48 4.796a1 1 0 000 1.506z"/>
-                      </svg>
-                Back</a>
 
             <div class="job-sidebar mt-4">
-                <ul class="list-group">
+                <ul class="list-group job-manage">
                     <li class="list-group-item"><strong>{{ job.get_payment_display }}</strong></li>
                     <li class="list-group-item">{% include 'jobs/_job_location.html' %}</li>
                     <li class="list-group-item">{% include 'jobs/_job_work_environment.html' %}</li>
@@ -53,6 +100,6 @@
     </div>
 
     {% include 'jobs/_job_confirm_archived.html' %}
-    
+
 {% endwith %}
 {% endblock %}
