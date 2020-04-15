@@ -80,7 +80,8 @@
                 <a href="{% url 'jobs:detail' object.slug %}" class="btn btn-block btn-info mt-2">View Applications</a>
 
             {% else %}
-                <a href="#" class="btn btn-primary btn-lg btn-block">Submit Application</a>
+                <a href="#" class="btn btn-primary btn-lg btn-block" onclick="return openAjaxModal('{% url 'jobs:submit_application' job.slug %}')" data-toggle="modal" data-target="#ajaxModal">Submit Application</a>
+                <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-block">Back</a>
             {% endif %}
 
             <div class="job-sidebar mt-4">

@@ -2,7 +2,9 @@ from django.contrib import admin
 
 from .models import (Job,
                      JobQuestion,
-                     Applicant)
+                     Applicant,
+                     ApplicantAnwer
+                     )
 
 
 class JobQuestionInline(admin.TabularInline):
@@ -23,3 +25,21 @@ class JobAdmin(admin.ModelAdmin):
         JobQuestionInline,
         ApplicantInline
     ]
+
+
+class ApplicantAnswerInline(admin.TabularInline):
+    model = ApplicantAnwer
+
+
+@admin.register(Applicant)
+class ApplicantAdmin(admin.ModelAdmin):
+    list_display = ['id', 'job', 'created']
+    
+    inlines = [
+        ApplicantAnswerInline
+    ]
+
+
+@admin.register(ApplicantAnwer)
+class ApplicantAnwerAdmin(admin.ModelAdmin):
+    list_display = ('id',)

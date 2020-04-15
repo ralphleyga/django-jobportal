@@ -13,9 +13,16 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import get_object_or_404
+from django.forms import formset_factory
 
 from .filters import JobFilter
-from .forms import JobForm, JobFilterForm
+from .forms import (
+        JobForm,
+        JobFilterForm,
+        JobApplicationForm,
+        ApplicantAnwerForm
+    )
 from .models import Job, JobQuestion
 
 
@@ -53,6 +60,7 @@ class MyJobsView(BrowseJobsView):
     queryset = Job.objects.filter(archived=False).order_by('-created')
     header_title = 'Posted'
     active_menu = {'is_manage': True}
+    paginate_by = 20
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -228,3 +236,51 @@ class QuestionDeleteView(LoginRequiredMixin, View):
         question.delete()
         messages.add_message(request, messages.INFO, self.success_message)
         return HttpResponseRedirect(reverse_lazy('jobs:detail', args=[question.job.slug]))
+
+
+class SubmitApplicationView(TemplateView):
+    
+    template_name = 'jobs/ajax_application.html'
+    form_class = JobApplicationForm
+
+    def get(self, request, **kwargs):
+        form = self.form_class()
+        job = get_object_or_404(Job, slug=kwargs.get('slug'))
+        jobs_count = job.jobquestion_set.all().count()
+        ApplicantAnwerFormSet = formset_factory(ApplicantAnwerForm, extra=jobs_count, max_num=jobs_count)
+        initial_data = []
+        for jq in job.jobquestion_set.all():
+            initial_data.append({
+                'question': jq.id,
+            })
+        
+        return self.render_to_response({
+            'form': form,
+            'form_set': ApplicantAnwerFormSet(initial=initial_data),
+            'job': job
+        })
+        
+        
+    def post(self, request, **kwargs):
+        form = self.form_class(request.POST)
+        job = get_object_or_404(Job, slug=kwargs.get('slug'))
+        jobs_count = job.jobquestion_set.all().count()
+        ApplicantAnwerFormSet = formset_factory(ApplicantAnwerForm)
+        formset = ApplicantAnwerFormSet(data=request.POST)
+        
+        if form.is_valid():
+            applicant = form.save(commit=False)
+
+            if request.user.is_authenticated:
+                applicant.user = request.user
+            applicant.job = job
+            applicant.save()
+
+        if formset.is_valid():
+            for answer_form in formset:
+                if answer_form.is_valid():
+                    answer = answer_form.save(commit=False)
+                    answer.applicant = applicant
+                    answer.save()
+        
+        return HttpResponseRedirect(reverse_lazy('jobs:detail', args=[job.slug]))

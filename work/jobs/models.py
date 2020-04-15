@@ -70,7 +70,12 @@ class JobQuestion(models.Model):
     question = models.TextField()
     
     def __str__(self):
-        return self.job.title
+        return f'{self.question} - {self.job.title}'
+
+
+def applicant_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return f'job_{instance.job.slug}/applicant_{instance.id}/{filename}'
 
 
 class Applicant(models.Model):
@@ -78,11 +83,24 @@ class Applicant(models.Model):
     email = models.EmailField()
     name = models.CharField(max_length=200)
 
-    cover_letter = models.TextField()
+    cover_letter = models.TextField('Cover Letter')
     job = models.ForeignKey(Job, on_delete=models.DO_NOTHING)
     applicant_status = models.CharField(max_length=50, choices=APPLICANT_STATUS)
+    document = models.FileField(upload_to=applicant_directory_path, null=True, blank=True, help_text='Upload your resume or any supporting document')
 
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.email} applied to {self.job.title}'
+        return str(f'{self.email} applied to {self.job.title}')
+    
+    class Meta:
+        unique_together = ('job', 'email')
+
+
+class ApplicantAnwer(models.Model):
+    applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
+    answer = models.TextField()
+    question = models.ForeignKey(JobQuestion, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.pk)

@@ -11,10 +11,18 @@
         {% for field  in form.visible_fields %}
             {% include 'utils/_field.html' with field=field  %}
         {% endfor %}
+
+        {{ form_set.management_form }} 
+        {% for form_answer in form_set %}
+            {% for field  in form_answer.visible_fields %}
+                {{ field.question }}
+                {% include 'utils/_field.html' with field=field  %}
+            {% endfor %}
+        {% endfor %}
     </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Send Application</button>
     </div>
 </form>

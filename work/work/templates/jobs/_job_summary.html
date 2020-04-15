@@ -1,6 +1,6 @@
 <a href="{% url 'jobs:detail' job.slug %}" class="list-group-item list-group-item-action pt-4 pb-4">
     <div class="d-flex w-100 justify-content-between">
-        <p class="mb-3"><strong>{{ job.title }}</strong> <span>at</span> <strong>{{ job.company }} {% if job.closed %}[Closed] {% endif %}  {% if job.archived %}[Archived]{% endif %}</strong></p>
+        <h5 class="mb-3"><strong>{{ job.title }}</strong> <span>at</span> <strong>{{ job.company }} {% if job.closed %}[Closed] {% endif %}  {% if job.archived %}<br/><span class="badge badge-info"></span>Archived</span>{% endif %}</strong></h5>
         <p>
         <small>
             3 days ago

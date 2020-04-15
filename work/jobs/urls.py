@@ -12,7 +12,9 @@ from .views import (BrowseJobsView,
                     
                     QuestionUpdateView,
                     QuestionCreateView,
-                    QuestionDeleteView
+                    QuestionDeleteView,
+                    
+                    SubmitApplicationView,
                     )
 
 app_name = 'jobs'
@@ -31,6 +33,8 @@ urlpatterns = [
     path('<slug:slug>/question/<int:pk>/update/', QuestionUpdateView.as_view(), name='question_update'),
     path('<slug:slug>/question/', QuestionCreateView.as_view(), name='question_create'),
 
+
+    path('<slug:slug>/apply/', SubmitApplicationView.as_view(), name='submit_application'),
     path('<slug:slug>/', JobDetail.as_view(), name='detail'),
 
     path('', BrowseJobsView.as_view(), name='browse'),
