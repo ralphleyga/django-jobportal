@@ -242,6 +242,7 @@ class SubmitApplicationView(TemplateView):
     
     template_name = 'jobs/ajax_application.html'
     form_class = JobApplicationForm
+    success_message = 'You have successfully sent your application.'
 
     def get(self, request, **kwargs):
         form = self.form_class()
@@ -282,5 +283,5 @@ class SubmitApplicationView(TemplateView):
                     answer = answer_form.save(commit=False)
                     answer.applicant = applicant
                     answer.save()
-        
+            messages.add_message(request, messages.INFO, self.success_message)
         return HttpResponseRedirect(reverse_lazy('jobs:detail', args=[job.slug]))

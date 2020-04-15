@@ -1,3 +1,6 @@
+{% load widget_tweaks %}
+{% load question_display %}
+
 <div class="modal-header">
     <h5 class="modal-title" id="genericModalLabel">Submit Application</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,9 +17,20 @@
 
         {{ form_set.management_form }} 
         {% for form_answer in form_set %}
+            <p class="mt-4"><strong>Answer the following questions:</strong></p>
             {% for field  in form_answer.visible_fields %}
-                {{ field.question }}
-                {% include 'utils/_field.html' with field=field  %}
+            <span>
+                <div class="form-group">
+                    {% if field.label == 'Question' %}
+                        {% with field.value as jobquestion_id %}
+                            {{ jobquestion_id|job_question }}
+                        {% endwith %}
+                        {% render_field field class+="d-none" %}
+                    {% else %}
+                        {% render_field field class+="form-control" %}
+                    {% endif %}
+                  </div>
+            </span>
             {% endfor %}
         {% endfor %}
     </div>

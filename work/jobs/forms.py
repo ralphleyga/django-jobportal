@@ -31,8 +31,6 @@ class JobApplicationForm(forms.ModelForm):
 
 class ApplicantAnwerForm(forms.ModelForm):
 
-    # question = forms.IntegerField(widget=forms.HiddenInput())
-
     class Meta:
         model = ApplicantAnwer
         fields = ('question', 'answer')
