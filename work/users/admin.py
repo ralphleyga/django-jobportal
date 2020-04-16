@@ -13,16 +13,19 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('email', 'first_name', 'last_name', 'is_staff',
                     'is_active',)
     fieldsets = (
-        # (None, {'fields': ('email', 'password')}),
+        
         ('Personal info', {'fields': ('first_name',
                                       'last_name',
                                       'email',)}),
+        ('Company details', {'fields': ('company', 'about', 'logo')}),
         ('Permissions', {'fields': ('is_active',
                                     'is_staff',
                                     'is_superuser',
                                     'groups',
                                     'user_permissions')}),
         ('Important dates', {'fields': ('last_login',)}),
+        (None, {'fields': ('password',)}),
+        
     )
     add_fieldsets = (
         (None, {

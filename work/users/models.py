@@ -33,6 +33,10 @@ class AccountManager(BaseUserManager):
         return user
 
 
+def avatar_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return f'user_{instance.id}/avatar_{instance.id}/{filename}'
+
 class User(AbstractBaseUser, PermissionsMixin):
     """Restructure Abstract Base for Users."""
 
@@ -47,6 +51,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    company = models.CharField(max_length=200, blank=True, null=True)
+    logo = models.FileField(upload_to=avatar_directory_path, null=True, blank=True, help_text='Upload your company logo')
+    about = models.TextField(blank=True, null=True)
 
     objects = AccountManager()
 
