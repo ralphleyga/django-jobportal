@@ -305,4 +305,18 @@ class ApplicantView(LoginRequiredMixin, TemplateView):
         return self.render_to_response({
             'applicant': applicant
         })
-        
+    
+    def post(self, request, **kwargs):
+        applicant = get_object_or_404(Applicant, id=kwargs['id'])
+
+        if applicant.job.user != request.user:
+            raise Http404
+
+        if 'interview' in request.POST:
+            applicant.applicant_status = 'interview'
+        elif 'reject' in request.POST:
+            applicant.applicant_status = 'rejected'
+
+        applicant.save()
+        messages.add_message(request, messages.INFO, f'You have success set the applicant to {applicant.applicant_status}')
+        return HttpResponseRedirect(reverse_lazy('jobs:detail', args=[kwargs['slug']]))

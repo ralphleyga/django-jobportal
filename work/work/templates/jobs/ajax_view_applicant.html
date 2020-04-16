@@ -13,18 +13,28 @@
     <div class="modal-body">
         <h2><strong>{{ applicant.name }}</strong></h2>
         <p>contact: {{ applicant.email }}</p>
-
-        <p>
-            <strong>Cover Letter:</strong>
-        </p>
-
         <div>
+            <strong>Cover Letter:</strong>
             {{ applicant.cover_letter|linebreaks }}
         </div>
+
+        {% if applicant.applicantanwer_set.all %}
+            <h2 class="mt-4">Answers:</h2>
+            {% for answer in applicant.applicantanwer_set.all %}
+            <div>
+                <div>
+                    <strong>{{ answer.question.question }}</strong>
+                    {{ answer.answer|linebreaks }}
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
     </div>
 
     <div class="modal-footer">
-        <button type="submit" name="interview" class="btn btn-primary">For Interview</button>
-        <button type="submit" name="reject" class="btn btn-warning">Reject</button>
+        {% if applicant.applicant_status != 'interview' %}
+            <button type="submit" name="interview" value="true" class="btn btn-primary" onclick="return confirm('Are you sure want to INTERVIEW {{ applicant.name }}?');">For Interview</button>
+        {% endif %}
+        <button type="submit" name="reject" value="true" class="btn btn-warning" onclick="return confirm('Are you sure want to REJECT {{ applicant.name }} ?');">Reject</button>
     </div>
 </form>
