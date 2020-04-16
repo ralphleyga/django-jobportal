@@ -11,7 +11,8 @@ WORK_ENVIRONMENT = (
 APPLICANT_STATUS = (
     ('pending', 'Pending'),
     ('rejected', 'Rejected'),
-    ('interview', 'Interview')
+    ('interview', 'Interview'),
+    ('hire', 'Hire'),
 )
 
 PAYMENT_TYPE = (
@@ -63,6 +64,15 @@ class Job(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_pending_applicants(self):
+        return self.applicant_set.filter(applicant_status='pending').order_by('created')
+    
+    def get_rejected_applicants(self):
+        return self.applicant_set.filter(applicant_status='rejected').order_by('created')
+    
+    def get_interview_applicants(self):
+        return self.applicant_set.filter(applicant_status='interview').order_by('created')
 
 
 class JobQuestion(models.Model):

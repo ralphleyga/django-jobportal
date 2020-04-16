@@ -15,6 +15,7 @@ from .views import (BrowseJobsView,
                     QuestionDeleteView,
                     
                     SubmitApplicationView,
+                    ApplicantView,
                     )
 
 app_name = 'jobs'
@@ -35,6 +36,7 @@ urlpatterns = [
 
 
     path('<slug:slug>/apply/', SubmitApplicationView.as_view(), name='submit_application'),
+    path('<slug:slug>/applicant/<int:id>/', ApplicantView.as_view(), name='view_application'),
     path('<slug:slug>/', JobDetail.as_view(), name='detail'),
 
     path('', BrowseJobsView.as_view(), name='browse'),

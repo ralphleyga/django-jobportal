@@ -160,6 +160,31 @@ h5 {
 		}
 		
 	}
+
+	.job-applicants {
+		padding: 2em;
+
+		.nav-item {
+			.nav-link {
+				background: $whiteColor;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+			}
+	
+			.nav-link:hover {
+				background-color: $whiteColor;
+				color: #333;
+				font-weight: 400;
+			}
+
+			.active {
+				border-bottom: 0;
+				background-color: $whiteColor;
+				color: #333;
+				font-weight: 600;
+			}
+		}
+
+	}
 }
 
 

@@ -41,6 +41,15 @@
                     {% endif %}
                 </div>
             </div>
+
+            {% if job.user == request.user %}
+            <div class="job-posts mt-5">
+                <h2>Applicants</h2>
+
+                {% include 'jobs/_applicants.html' %}
+
+                {% endif %}
+            </div>
         </div>
     
         <div class="col-md-3">
@@ -76,8 +85,6 @@
                 </div>
 
                 <a href="#" class="btn btn-block btn-info mt-2"  data-toggle="modal" data-target="#ajaxModal" onclick="return openAjaxModal('{% url 'jobs:question_create' job.slug %}')">Add Questions</a>
-
-                <a href="{% url 'jobs:detail' object.slug %}" class="btn btn-block btn-info mt-2">View Applications</a>
 
             {% else %}
                 <a href="#" class="btn btn-primary btn-lg btn-block" onclick="return openAjaxModal('{% url 'jobs:submit_application' job.slug %}')" data-toggle="modal" data-target="#ajaxModal">Submit Application</a>

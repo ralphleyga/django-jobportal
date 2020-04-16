@@ -23,7 +23,12 @@ from .forms import (
         JobApplicationForm,
         ApplicantAnwerForm
     )
-from .models import Job, JobQuestion
+from .models import (
+        Job,
+        JobQuestion,
+        Applicant,
+        ApplicantAnwer
+    )
 
 
 class ActiveMenuMixin(object):
@@ -240,7 +245,7 @@ class QuestionDeleteView(LoginRequiredMixin, View):
 
 class SubmitApplicationView(TemplateView):
     
-    template_name = 'jobs/ajax_application.html'
+    template_name = 'jobs/ajax_send_application.html'
     form_class = JobApplicationForm
     success_message = 'You have successfully sent your application.'
 
@@ -285,3 +290,19 @@ class SubmitApplicationView(TemplateView):
                     answer.save()
             messages.add_message(request, messages.INFO, self.success_message)
         return HttpResponseRedirect(reverse_lazy('jobs:detail', args=[job.slug]))
+
+
+class ApplicantView(LoginRequiredMixin, TemplateView):
+    
+    template_name = 'jobs/ajax_view_applicant.html'
+    
+    def get(self, request, **kwargs):
+        applicant = get_object_or_404(Applicant, id=kwargs['id'])
+        
+        if applicant.job.user != request.user:
+            raise Http404
+
+        return self.render_to_response({
+            'applicant': applicant
+        })
+        

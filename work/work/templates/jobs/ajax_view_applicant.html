@@ -1,0 +1,30 @@
+{% load widget_tweaks %}
+{% load question_display %}
+
+<div class="modal-header">
+    <h5 class="modal-title" id="genericModalLabel">Applicant Detail</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<form action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    <div class="modal-body">
+        <h2><strong>{{ applicant.name }}</strong></h2>
+        <p>contact: {{ applicant.email }}</p>
+
+        <p>
+            <strong>Cover Letter:</strong>
+        </p>
+
+        <div>
+            {{ applicant.cover_letter|linebreaks }}
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" name="interview" class="btn btn-primary">For Interview</button>
+        <button type="submit" name="reject" class="btn btn-warning">Reject</button>
+    </div>
+</form>
