@@ -328,6 +328,7 @@ class ApplicantView(LoginRequiredMixin, TemplateView):
 class ApplicationListView(LoginRequiredMixin, ListView):
     model = Applicant
     template_name = 'jobs/applicants_list.html'
+    paginate_by = 20
     queryset = Applicant.objects.filter(job__archived=False,
                                        job__draft=False,
                                        job__closed=False

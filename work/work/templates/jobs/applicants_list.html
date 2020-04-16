@@ -11,17 +11,19 @@
         {% include 'jobs/_applicant_manage_menu.html' %}
     </div>
 
+    
     {% include 'jobs/_applicants_table.html' with jobs_applicants=object_list %}
 
+    {% with request.GET.applicant_status as applicant_status %}
     <div class="container d-flex justify-content-center mt-4">
         <nav aria-label="Page navigation">
             <ul class="pagination">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a href="?page=1" class="page-link">&laquo; first</a>
+                    <a href="?page=1&applicant_status={{ applicant_status }}" class="page-link">&laquo; first</a>
                 </li>
                 <li class="page-item">
-                    <a href="?page={{ page_obj.previous_page_number }}"  class="page-link">previous</a>
+                    <a href="?page={{ page_obj.previous_page_number }}&applicant_status={{ applicant_status }}"  class="page-link">previous</a>
                 </li>
             {% endif %}
             <li class="page-item">
@@ -29,11 +31,12 @@
 
             </li>
             {% if page_obj.has_next %}
-                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
-                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&applicant_status={{ applicant_status }}">next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&applicant_status={{ applicant_status }}">last &raquo;</a></li>
             {% endif %}
             </ul>
         </nav>
     </div>
+    {% endwith %}
 
 {% endblock %}

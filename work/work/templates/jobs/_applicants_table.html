@@ -1,24 +1,34 @@
 <div class="table-responsive">
     {% if jobs_applicants %}
+
+    {% comment %}
     <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-        </tr>
-        </thead>
         <tbody>
             {% for applicant in jobs_applicants %}
             <tr>
                 <td>{{ applicant.name }}</td>
                 <td>
                     {{ applicant.email }}
-                    <a href="#" class="btn btn-info btn-sm float-right d-sm"  data-toggle="modal" data-target="#ajaxModal" onclick="return openAjaxModal('{% url 'jobs:view_application' applicant.job.slug applicant.id %}')">View</a>
+                    <a href="#" data-toggle="modal" data-target="#ajaxModal" onclick="return openAjaxModal('{% url 'jobs:view_application' applicant.job.slug applicant.id %}')">View</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% endcomment %}
+
+        <ul class="list-group list-group-flush ml-4 mr-4">
+            {% for applicant in jobs_applicants %}
+            <li  class="list-group-item d-flex">
+                <div class="col-md-10" style="padding: 0">
+                    <strong>{{ applicant.name }}</strong>  &middot; {{ applicant.email }}
+                </div>
+                <div class="col-md-2 mb-1" style="padding: 0">
+                    <a href="#" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#ajaxModal" onclick="return openAjaxModal('{% url 'jobs:view_application' applicant.job.slug applicant.id %}')">View</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
     {% else %}
         <p class="text-center">No Record</p>
     {% endif %}
