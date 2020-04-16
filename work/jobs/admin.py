@@ -33,7 +33,7 @@ class ApplicantAnswerInline(admin.TabularInline):
 
 @admin.register(Applicant)
 class ApplicantAdmin(admin.ModelAdmin):
-    list_display = ['id', 'job', 'created']
+    list_display = ['id', 'email', 'job', 'created']
     
     inlines = [
         ApplicantAnswerInline

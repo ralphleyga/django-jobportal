@@ -136,3 +136,4 @@ package-lock.json
 .DS_Store
 *.code-workspace
 node_modules/
+media/

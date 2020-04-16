@@ -17,6 +17,12 @@
             <strong>Cover Letter:</strong>
             {{ applicant.cover_letter|linebreaks }}
         </div>
+        
+        {% if applicant.document %}
+        <p>
+            <a href="{{ applicant.document.url }}" target="_blank"  class="btn btn-info">Download Document</a>
+        </p>
+        {% endif %}
 
         {% if applicant.applicantanwer_set.all %}
             <h2 class="mt-4">Answers:</h2>
