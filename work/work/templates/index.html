@@ -16,8 +16,8 @@
     <hr class="my-4">
     <p  class="text-center">It uses utility classes for typography and spacing to space content out within the larger container.</p>
     <p class="text-center">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Post a Job</a>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Find Work</a>
+        <a class="btn btn-primary btn-lg" href="{% url 'jobs:create' %}" role="button">Post a Job</a>
+        <a class="btn btn-primary btn-lg" href="{% url 'jobs:browse' %}" role="button">Find Work</a>
     </p>
 </div>
 
@@ -26,8 +26,10 @@
     <h2>Python Jobs</h2>
 
     <div class="list-group">
-      add jobs here...
-    </div>
+        {% for job in jobs %}
+          {% include 'jobs/_job_summary.html' with job=job %}
+        {% endfor %}
+      </div>
 </div>
 
 {% endblock %}
