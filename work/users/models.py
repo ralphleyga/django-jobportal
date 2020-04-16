@@ -55,6 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     company = models.CharField(max_length=200, null=True)
     logo = models.FileField(upload_to=avatar_directory_path, null=True, blank=True, help_text='Upload your company logo')
     about = models.TextField(null=True)
+    website = models.URLField(null=True, blank=True)
 
     objects = AccountManager()
 
