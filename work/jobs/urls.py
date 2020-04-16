@@ -16,11 +16,13 @@ from .views import (BrowseJobsView,
                     
                     SubmitApplicationView,
                     ApplicantView,
+                    ApplicationListView
                     )
 
 app_name = 'jobs'
 
 urlpatterns = [
+    path('applicants/', ApplicationListView.as_view(), name='applicants'),
     path('create/', JobCreateView.as_view(), name='create'),
     path('manage/', MyJobsView.as_view(), name='manage'),
     path('archived/', MyJobsArchivedView.as_view(), name='archived'),

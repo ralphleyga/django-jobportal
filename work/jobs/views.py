@@ -16,7 +16,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404
 from django.forms import formset_factory
 
-from .filters import JobFilter
+from .filters import (
+        JobFilter,
+        ApplicantFilter)
 from .forms import (
         JobForm,
         JobFilterForm,
@@ -279,6 +281,7 @@ class SubmitApplicationView(TemplateView):
 
             if request.user.is_authenticated:
                 applicant.user = request.user
+
             applicant.job = job
             applicant.save()
 
@@ -320,3 +323,18 @@ class ApplicantView(LoginRequiredMixin, TemplateView):
         applicant.save()
         messages.add_message(request, messages.INFO, f'You have success set the applicant to {applicant.applicant_status}')
         return HttpResponseRedirect(reverse_lazy('jobs:detail', args=[kwargs['slug']]))
+
+
+class ApplicationListView(LoginRequiredMixin, ListView):
+    model = Applicant
+    template_name = 'jobs/applicants_list.html'
+    queryset = Applicant.objects.filter(job__archived=False,
+                                       job__draft=False,
+                                       job__closed=False
+                                       )
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        qry = queryset.filter(job__user=self.request.user).order_by('-created')
+        qry = ApplicantFilter(self.request.GET, queryset=qry).qs
+        return qry

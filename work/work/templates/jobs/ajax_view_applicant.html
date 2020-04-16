@@ -24,6 +24,8 @@
         </p>
         {% endif %}
 
+        
+
         {% if applicant.applicantanwer_set.all %}
             <h2 class="mt-4">Answers:</h2>
             {% for answer in applicant.applicantanwer_set.all %}
@@ -38,6 +40,8 @@
     </div>
 
     <div class="modal-footer">
+        <a href="{% url 'jobs:detail' applicant.job.slug %}" class="btn btn-info" target="_blank">View Job</a>
+
         {% if applicant.applicant_status != 'interview' %}
             <button type="submit" name="interview" value="true" class="btn btn-primary" onclick="return confirm('Are you sure want to INTERVIEW {{ applicant.name }}?');">For Interview</button>
         {% endif %}

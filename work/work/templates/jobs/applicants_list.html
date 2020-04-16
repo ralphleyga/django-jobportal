@@ -1,18 +1,17 @@
 {% extends 'jobs/job_base.html' %}
 
-{% block title %}My Jobs{% endblock %}
+{% block title %}Applicants - {{ request.GET.applicant_status|title }}{% endblock %}
 
 {% block job_content %}
-    <div class="job-posts">
-        <div class="row">
-            <div class="col-md-4">
-                <h2>My Jobs</h2>
-            </div>
-
-            {% include 'jobs/_job_manage_menu.html' with jobs=object_list %}
+<div class="job-posts">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Applications</h2>
         </div>
-    
-        {% include 'jobs/_jobs_list.html' with jobs=object_list %}
+        {% include 'jobs/_applicant_manage_menu.html' %}
+    </div>
+
+    {% include 'jobs/_applicants_table.html' with jobs_applicants=object_list %}
 
     <div class="container d-flex justify-content-center mt-4">
         <nav aria-label="Page navigation">
@@ -36,4 +35,5 @@
             </ul>
         </nav>
     </div>
+
 {% endblock %}

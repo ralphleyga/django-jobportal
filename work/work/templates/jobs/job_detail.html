@@ -43,13 +43,11 @@
             </div>
 
             {% if job.user == request.user %}
-            <div class="job-posts mt-5">
-                <h2>Applicants</h2>
-
-                {% include 'jobs/_applicants.html' %}
-
-                {% endif %}
-            </div>
+                <div class="job-posts mt-5">
+                    <h2>Applicants</h2>
+                    {% include 'jobs/_applicants.html' %}
+                </div>
+            {% endif %}
         </div>
     
         <div class="col-md-3">
