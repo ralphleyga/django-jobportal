@@ -109,6 +109,13 @@ class JobCreateView(LoginRequiredMixin, ActiveMenuMixin, SuccessMessageMixin, Cr
     success_message = 'Job successfully created.'
     active_menu = {'is_create': True}
     
+    def get_initial(self):
+        """Return the initial data to use for forms on this view."""
+        return {
+            'company': self.request.user.company,
+            'job_application_email': self.request.user.email
+        }
+    
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
