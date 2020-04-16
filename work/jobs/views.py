@@ -329,7 +329,7 @@ class ApplicantView(LoginRequiredMixin, TemplateView):
 
         applicant.save()
         messages.add_message(request, messages.INFO, f'You have success set the applicant to {applicant.applicant_status}')
-        return HttpResponseRedirect(reverse_lazy('jobs:detail', args=[kwargs['slug']]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class ApplicationListView(LoginRequiredMixin, ListView):
