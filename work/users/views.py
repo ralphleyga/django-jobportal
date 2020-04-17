@@ -41,8 +41,8 @@ class ProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
                 'email',
                 'logo',
                 'company',
+                'website',
                 'about',
-                'website'
                 )
     success_message = 'Profile Updated.'
 
