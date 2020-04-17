@@ -1,5 +1,9 @@
+from registration.forms import (
+    RegistrationForm,
+    RegistrationFormTermsOfService,
+    RegistrationFormUniqueEmail
+    )
 
 
-from .models import User
-
-
+class SignUpForm(RegistrationFormTermsOfService, RegistrationFormUniqueEmail):
+    pass

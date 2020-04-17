@@ -19,13 +19,17 @@ from django.conf.urls import include, url
 from django.conf import settings
 
 from users.views import IndexView, DashboardView
+from users.forms import SignUpForm
+from registration.backends.simple.views import RegistrationView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('registration.backends.simple.urls')),
+    path('register/', RegistrationView.as_view(form_class=SignUpForm, success_url='/'), name='register'),
 
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('jobs/', include('jobs.urls')),
+    path('user/', include('users.urls')),
     
     path('', IndexView.as_view(), name='index'),
 

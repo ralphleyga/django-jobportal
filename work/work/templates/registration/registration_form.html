@@ -1,0 +1,42 @@
+{% extends "registration/registration_base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center ">
+    <div class="login-form col-md-12">
+  
+      <form method="post" action=".">
+        {% csrf_token %} 
+        <h1 class="mb-4 text-center">Register to post a job</h1>
+  
+        <input type="hidden" name="next" value="{{ next }}" />
+        
+        {% for field in form.visible_fields %}
+
+            {% if field.field.widget.input_type == 'checkbox' %}
+                <div class="form-check">
+                    {{ field|add_class:"form-check-input" }}
+                    <label class="form-check-label" for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                    </label>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {% if field.errors %}<small class="field-error">{{ field.errors.as_text }}</small>{% endif %}
+                    {{ field|add_class:"form-control" }}
+                    <small>{{ field.help_text }}</small>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+        
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Register</button> &middot; <a href="{% url 'auth_login' %}">Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
