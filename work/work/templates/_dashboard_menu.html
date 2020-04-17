@@ -1,10 +1,24 @@
+{% load thumbnail %}
+
 <div class="job-sidebar mb-4">
     <div class="profile mt-4">
-        <div class="avatar mx-auto">
-            RL
+        <div class="avatar d-flex justify-content-center">
+            {% if request.user.logo %}
+                {% thumbnail request.user.logo "180x180" as im %}
+                    <img src="{{ im.url }}">
+                {% endthumbnail %}
+            {% else %}
+                <div class="initial">
+                    {{ request.user.avatar_name }}
+                </div>
+            {% endif %}
         </div>
 
-        <p class="mt-2 text-center"><strong>{{ request.user.get_full_name }}</strong></p>
+        <p class="mt-2 text-center">
+            <strong>{{ request.user.get_full_name }}</strong><br/>
+            <small>{{ request.user.company }}</small></br>
+            <small>{{ request.user.website|urlize }}</small>
+        </p>
     </div>
 
     <ul class="list-group  list-group-flush job-manage">

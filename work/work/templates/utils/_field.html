@@ -5,7 +5,7 @@
     <div class="col-sm-10">
         {{ field.error }}
         {% if field.field.widget.input_type == 'file' %}
-            {% render_field field class+="form-control-file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" %}
+            {% render_field field class+="form-control-file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" %}
             {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
         {% else %}
             {% render_field field class+="form-control" placeholder=field.help_text %}

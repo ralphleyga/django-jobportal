@@ -6,3 +6,5 @@ django-countries==6.1.2
 django-widget-tweaks==1.4.8
 django-filter==2.2.0
 django-registration-redux==2.7
+sorl-thumbnail==12.6.3
+Pillow==7.1.1

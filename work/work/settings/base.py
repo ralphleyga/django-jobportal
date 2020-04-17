@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_countries',
     'widget_tweaks',
     'django_filters',
+    'sorl.thumbnail',
 
     'users.apps.UsersConfig',
     'jobs.apps.JobsConfig',

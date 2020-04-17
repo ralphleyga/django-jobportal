@@ -40,7 +40,7 @@ def avatar_directory_path(instance, filename):
 class User(AbstractBaseUser, PermissionsMixin):
     """Restructure Abstract Base for Users."""
 
-    email = models.EmailField(unique=True, max_length=255, validators=[MaxLengthValidator(80)])
+    email = models.EmailField(unique=True, max_length=255, validators=[MaxLengthValidator(80)], help_text="This is your login email.  Careful on changing this field.")
 
     first_name = models.CharField(max_length=255, blank=True, validators=[MaxLengthValidator(40)])
     last_name = models.CharField(max_length=255, blank=True, validators=[MaxLengthValidator(40)])
@@ -73,6 +73,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.get_full_name()
+    
+    def avatar_name(self):
+        return f'{self.first_name[0].upper()}{self.last_name[0].upper()}'
 
     class Meta:
         app_label = 'users'

@@ -4,8 +4,12 @@ from django.views.generic import (
     UpdateView,
     )
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
 from jobs.models import Job, Applicant
+
+from .models import User
+
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -28,5 +32,20 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = 'users/ajax_profile_update.html'
+class ProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    template_name = 'users/ajax_profile_form.html'
+    model = User
+    fields = (
+                'first_name',
+                'last_name',
+                'email',
+                'logo',
+                'company',
+                'about',
+                'website'
+                )
+    success_message = 'Profile Updated.'
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
+

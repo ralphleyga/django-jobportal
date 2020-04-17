@@ -241,16 +241,22 @@ footer {
 
 	.profile {
 		.avatar {
-			border: 1px solid rgba(0, 0, 0, 0.125);
-			text-align: center;
-			height: 2em;
-			width: 2em;
-			font-size: 3em;
 			vertical-align: middle;
+			text-align: center;
 			padding-top: 12px;
-			border-radius: 4em;
-			font-weight: 700;
-			color: #FFB726;
+
+			.initial {
+				border: 1px solid rgba(0, 0, 0, 0.125);
+				text-align: center;
+				width: 2em;
+				height: 2em;
+				font-size: 5em;
+				vertical-align: middle;
+				padding-top: 15px;
+				border-radius: 4em;
+				font-weight: 700;
+				color: #FFB726;
+			}
 		}
 	}
 
