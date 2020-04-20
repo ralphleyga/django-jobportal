@@ -46,11 +46,13 @@ class Job(models.Model):
     job_application_email = models.EmailField('Email', blank=True, null=True, help_text='Notify this email or blank to use default email') # Applications will be forwarded to this email
     job_link = models.URLField(blank=True, null=True, help_text='Enter external link or use our cover letter system') # blank if there's external link
     
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
     archived = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)
     draft = models.BooleanField(default=False)
+    
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    expired_date = models.DateField(blank=True, null=True)
 
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
     

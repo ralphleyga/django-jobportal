@@ -101,6 +101,15 @@
                     {% endif %}
                 </ul>
             </div>
+
+            <div class="job-sidebar mt-4">
+                {% include 'jobs/_company_details.html' with job=job %}
+                <ul class="list-group job-manage">
+                    <li class="list-group-item">
+                        {{ job.user.about|linebreaks }}
+                    </li>
+                </ul>
+            </div>
         </div>
     
     </div>
