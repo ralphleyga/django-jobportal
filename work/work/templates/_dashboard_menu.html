@@ -1,24 +1,7 @@
-{% load thumbnail %}
+
 
 <div class="job-sidebar mb-4">
-    <div class="profile mt-4">
-        <div class="avatar d-flex justify-content-center">
-            {% if request.user.logo %}
-                {% thumbnail request.user.logo "180x180" as im %}
-                    <img src="{{ im.url }}">
-                {% endthumbnail %}
-            {% else %}
-                <div class="initial">
-                    {{ request.user.avatar_name }}
-                </div>
-            {% endif %}
-        </div>
-
-        <p class="mt-2 text-center">
-            <small>{{ request.user.company }}</small></br>
-            <small>{{ request.user.website|urlize }}</small>
-        </p>
-    </div>
+    {% include 'jobs/_company_details.html' with job=request %}
 
     <ul class="list-group  list-group-flush job-manage">
         <li class="list-group-item"><a href="{% url 'dashboard' %}">Main Dashboard</a></li>

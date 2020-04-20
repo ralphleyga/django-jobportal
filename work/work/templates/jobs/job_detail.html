@@ -105,23 +105,7 @@
             </div>
 
             <div class="job-sidebar mt-4">
-                <div class="profile mt-4">
-                    <div class="avatar d-flex justify-content-center">
-                        {% if job.user.logo %}
-                            {% thumbnail job.user.logo "180x180" as im %}
-                                <img src="{{ im.url }}">
-                            {% endthumbnail %}
-                        {% else %}
-                            <div class="initial">
-                                {{ job.user.avatar_name }}
-                            </div>
-                        {% endif %}
-                    </div>
-            
-                    <p class="mt-2 text-center">
-                        <small>{{ job.user.company }}</small></br>
-                    </p>
-                </div>
+                {% include 'jobs/_company_details.html' with job=job %}
 
                 <ul class="list-group job-manage">
                     <li class="list-group-item">
