@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load thumbnail %}
+
 {% block title %}{{ job.title }} at {{ job.company }}{% endblock %}
 
 {% block meta_tags %}
@@ -99,6 +101,35 @@
                     {% if job.salary_range %}
                         <li class="list-group-item"><strong>$</strong> {{ job.salary_range }}</li>
                     {% endif %}
+                </ul>
+            </div>
+
+            <div class="job-sidebar mt-4">
+                <div class="profile mt-4">
+                    <div class="avatar d-flex justify-content-center">
+                        {% if job.user.logo %}
+                            {% thumbnail job.user.logo "180x180" as im %}
+                                <img src="{{ im.url }}">
+                            {% endthumbnail %}
+                        {% else %}
+                            <div class="initial">
+                                {{ job.user.avatar_name }}
+                            </div>
+                        {% endif %}
+                    </div>
+            
+                    <p class="mt-2 text-center">
+                        <small>{{ job.user.company }}</small></br>
+                    </p>
+                </div>
+
+                <ul class="list-group job-manage">
+                    <li class="list-group-item">
+                        {{ job.user.about|linebreaks }}
+                    </li>
+                    <li class="list-group-item">
+                        {{ job.user.website|urlize }}
+                    </li>
                 </ul>
             </div>
         </div>
