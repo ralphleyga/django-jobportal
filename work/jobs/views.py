@@ -365,19 +365,25 @@ class JobActivateOptionView(LoginRequiredMixin, TemplateView):
 
 
 class JobActivateTrialView(LoginRequiredMixin, View):
+    DAYS = settings.TRIAL_DAYS
+    
     def get(self, request, **kwargs):
         job = get_object_or_404(Job, slug=kwargs['slug'], user=request.user)
         
         if job.expired_date:
             raise Http404
         else:
-            expiration = timezone.now() + timedelta(days=settings.TRIAL_DAYS)
+            expiration = timezone.now() + timedelta(days=self.DAYS)
             job.expired_date = expiration.date()
             job.save()
             
             messages.add_message(request, messages.INFO, f'You have success publish your job that will be in listing until {job.expired_date}')
 
         return HttpResponseRedirect(reverse_lazy('jobs:detail', args=[job.slug]))
+
+
+class JobPremiumTrialView(JobActivateTrialView):
+    DAYS = settings.PREMIUM_DAYS
 
 
 def invoice_id_generator():

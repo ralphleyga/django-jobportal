@@ -12,6 +12,7 @@ from .views import (BrowseJobsView,
                     JobAskPaymentView,
                     
                     JobActivateTrialView,
+                    JobPremiumTrialView,
                     JobActivateOptionView,
                     
                     QuestionUpdateView,
@@ -46,6 +47,7 @@ urlpatterns = [
     path('<slug:slug>/publish-option/', JobActivateOptionView.as_view(), name='activate_option'),
     path('<slug:slug>/applicant/<int:id>/', ApplicantView.as_view(), name='view_application'),
     path('<slug:slug>/activate/trial/', JobActivateTrialView.as_view(), name='activate_trial'),
+    path('<slug:slug>/activate/premium/', JobPremiumTrialView.as_view(), name='activate_premium_trial'),
     path('<slug:slug>/', JobDetail.as_view(), name='detail'),
 
     path('', BrowseJobsView.as_view(), name='browse'),

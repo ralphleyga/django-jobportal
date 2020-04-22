@@ -30,7 +30,7 @@
       </ul>
 
       <div class="text-center mt-4 ">
-        <a href="{% url 'jobs:ask_payment' job.slug %}" class="btn btn-info btn-lg mb-2">Pay via Paypal</a>
+        <a href="{% url 'jobs:activate_premium_trial' job.slug %}" class="btn btn-info btn-lg mb-2">Free for now</a>
       </div>
   </div>
   <div class="col-md-1"></div>
@@ -51,7 +51,7 @@
       </ul>
 
       <div class="text-center mt-4 align-text-bottom">
-        <a href="#" class="btn btn-info btn-lg mb-2">Publish Now</a>
+        <a href="{% url 'jobs:activate_trial' job.slug %}" class="btn btn-info btn-lg mb-2">Publish Now</a>
       </div>
   </div>
   
