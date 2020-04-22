@@ -30,6 +30,7 @@ urlpatterns = [
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('jobs/', include('jobs.urls')),
     path('user/', include('users.urls')),
+    url(r'^paypal/', include('paypal.standard.ipn.urls')),
     
     path('', IndexView.as_view(), name='index'),
 

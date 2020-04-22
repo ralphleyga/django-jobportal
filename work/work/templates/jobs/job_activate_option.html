@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}#1 Python Job Posting Space for Pythonista{% endblock %}
+
+{% block meta_tags %}
+  {% with meta_description="Get the right Python jobs for you" meta_title="django_work: #1 Python Job Posting Space for Pythonista" %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center">Pricing</h1>
+
+<div class="row">
+  <div class="job-posts col-md-6">
+      <h2 class="text-center">Premium</h2>
+
+      <h1 class="text-center mt-2 mb-2">
+        $49
+      </h1>
+      <p class="text-center">Per Job</p>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">60 days</li>
+        <li class="list-group-item">Premium Badge at listing</li>
+        <li class="list-group-item">Top in Job Listing</li>
+        <li class="list-group-item">Job at premium section</li>
+        <li class="list-group-item">Feature Company at home page</li>
+      </ul>
+
+      <div class="text-center mt-4 ">
+        <a href="{% url 'jobs:ask_payment' job.slug %}" class="btn btn-info btn-lg mb-2">Pay via Paypal</a>
+      </div>
+  </div>
+  <div class="col-md-1"></div>
+
+  <div class="job-posts col-md-5">
+      <h2 class="text-center">Trial</h2>
+
+      <h1 class="text-center mt-2 mb-2">
+        Free
+      </h1>
+      <p class="text-center">Per Job</p>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">7 days</li>
+        <li class="list-group-item">Up to 2 free job post</li>
+        <li class="list-group-item">No credit card required</li>
+        <li class="list-group-item">Can add additional questions</li>
+      </ul>
+
+      <div class="text-center mt-4 align-text-bottom">
+        <a href="#" class="btn btn-info btn-lg mb-2">Publish Now</a>
+      </div>
+  </div>
+  
+</div>
+
+{% endblock %}

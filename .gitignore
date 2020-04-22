@@ -137,3 +137,4 @@ package-lock.json
 *.code-workspace
 node_modules/
 media/
+*.bak

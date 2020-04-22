@@ -14,13 +14,13 @@
     </div>
 
     <p class="mt-2 text-center">
-        <small>
+        <strong>
             {% if job.company %}
                 {{ job.company }}
             {% else %}
                 {{ job.user.company }}
             {% endif %}
-        </small></br>
+        </strong></br>
         <small>{{ job.user.website|urlize }}</small>
     </p>
 </div>

@@ -2,10 +2,23 @@
     {% for job in jobs %}
     <li class="list-group-item">
         <a href="{% url 'jobs:detail' job.slug %}">{{ job.title }} at {{ job.company }}</a>
-        {% if job.draft %}<span class="badge badge-info">DRAFT</span>{% endif %}
-        {% if job.closed %}<span class="badge badge-info">CLOSED</span>{% endif %}
+
         <small>
-            {{ job.created|timesince }}
+            {% if job.draft %}<span class="badge badge-info">DRAFT</span>{% endif %}
+            {% if job.closed %}<span class="badge badge-info">CLOSED</span>{% endif %}
+
+            {% if not job.expired_date  %}
+                <span class="badge badge-danger">UNPUBLISHED</span>
+            {% else %}
+                {% if job.expired  %}
+                    <span class="badge badge-danger">EXPIRED</span>
+                {% endif %}
+            {% endif %}
+            
+            {% if job.expired_date %}
+                &middot;
+                Expiration Date: {{ job.expired_date }}
+            {% endif %}
         </small>
 
         <p class="float-right" style="margin: 0; padding: 0;">
@@ -14,6 +27,12 @@
                     Update
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownJob{{ job.id }}">
+                    {% if not job.expired_date  %}
+                    <a href="{% url 'jobs:activate_option' job.slug %}" class="dropdown-item">
+                        Activate
+                    </a>
+                    {% endif %}
+
                     <a href="{% url 'jobs:update' job.slug %}" class="dropdown-item">Edit</button>
 
                     <a href="{% url 'jobs:archive' job.slug %}" class="dropdown-item">
@@ -22,9 +41,9 @@
                     
                     <a href="{% url 'jobs:draft' job.slug %}" class="dropdown-item">
                         {% if job.draft %}
-                            Publish
+                            Undraft
                         {% else %}
-                            Set to Draft
+                            Draft
                         {% endif %}
                     </a>
 

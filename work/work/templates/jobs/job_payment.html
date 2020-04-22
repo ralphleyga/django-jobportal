@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}#1 Python Job Posting Space for Pythonista{% endblock %}
+
+{% block meta_tags %}
+  {% with meta_description="Get the right Python jobs for you" meta_title="django_work: #1 Python Job Posting Space for Pythonista" %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center">Premium Job</h1>
+
+<div class="row">
+  <div class="job-posts col-md-12  text-center">
+      <h2 class="text-center">Pay via Paypal</h2>
+
+      <h1 class="text-center mt-2 mb-2">
+        $49
+      </h1>
+      <p class="text-center">Per Job</p>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">60 days</li>
+        <li class="list-group-item">Premium Badge at listing</li>
+        <li class="list-group-item">Top in Job Listing</li>
+        <li class="list-group-item">Job at premium section</li>
+        <li class="list-group-item">Feature Company at home page</li>
+      </ul>
+
+        <div id="paypalPayment" class="d-none">
+            {{ form.render }}
+        </div>
+        <a href="#" class="btn btn-info btn-lg mb-2 mt-4" id="paypalPaymentBtn">Confirm Payment</a>
+      </div>
+  </div>
+  
+</div>
+
+{% endblock %}

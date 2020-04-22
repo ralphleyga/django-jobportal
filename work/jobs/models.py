@@ -1,6 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
 from django.utils.text import slugify
+from django.utils import timezone
 
 WORK_ENVIRONMENT = (
     ('remote', 'Remote'),
@@ -75,6 +76,15 @@ class Job(models.Model):
     
     def get_interview_applicants(self):
         return self.applicant_set.filter(applicant_status='interview').order_by('created')
+    
+    def expired(self):
+
+        if self.expired_date:
+            if self.expired_date <= timezone.now().date():
+                return True
+            return False
+
+        return False
 
 
 class JobQuestion(models.Model):

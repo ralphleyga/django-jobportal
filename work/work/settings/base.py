@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django_filters',
     'sorl.thumbnail',
+    'paypal.standard.ipn',
 
     'users.apps.UsersConfig',
     'jobs.apps.JobsConfig',
@@ -158,3 +159,11 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, us
 REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 INCLUDE_REGISTER_URL = False
 SIMPLE_BACKEND_REDIRECT_URL = '/jobs/create'
+
+TRIAL_DAYS = 7
+PREMIUM_DAYS = 60
+
+PAYPAL_TEST = True
+BUSINESS_EMAIL = "seller@paypalsandbox.com"
+PREMIUM_PRICE = 49.00
+PREMIUM_PLAN = "premium_plan"

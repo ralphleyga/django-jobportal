@@ -8,3 +8,4 @@ django-filter==2.2.0
 django-registration-redux==2.7
 sorl-thumbnail==12.6.3
 Pillow==7.1.1
+django-paypal==1.0.0

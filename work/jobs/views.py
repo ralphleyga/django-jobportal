@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.views.generic import (
     TemplateView,
     FormView,
@@ -9,12 +11,16 @@ from django.views.generic import (
     )
 from django.http import HttpResponseRedirect
 from django.http import Http404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404
 from django.forms import formset_factory
+from django.utils import timezone
+from django.conf import settings
+
+from paypal.standard.forms import PayPalPaymentsForm
 
 from .filters import (
         JobFilter,
@@ -42,7 +48,7 @@ class ActiveMenuMixin(object):
 class BrowseJobsView(ActiveMenuMixin, ListView):
     model = Job
     template_name = 'jobs/browse_jobs.html'
-    queryset = Job.objects.filter(draft=False, archived=False).order_by('-created')
+    queryset = Job.objects.filter(draft=False, archived=False, expired_date__gte=timezone.now().date()).order_by('-created')
     form_class = JobFilterForm()
     paginate_by = 10
     header_title = 'Browse Jobs'
@@ -197,7 +203,7 @@ class JobDraftView(LoginRequiredMixin, JobDetail):
         
         if self.object.draft:
             self.object.draft = False
-            status = 'published'
+            status = 'undraft'
         else:
             self.object.draft = True
 
@@ -346,3 +352,60 @@ class ApplicationListView(LoginRequiredMixin, ListView):
         qry = queryset.filter(job__user=self.request.user).order_by('-created')
         qry = ApplicantFilter(self.request.GET, queryset=qry).qs
         return qry
+
+
+class JobActivateOptionView(LoginRequiredMixin, TemplateView):
+    template_name = 'jobs/job_activate_option.html'
+    
+    def get(self, request, **kwargs):
+        job = get_object_or_404(Job, slug=kwargs['slug'], user=request.user)
+        return self.render_to_response({
+            'job': job,
+        })
+
+
+class JobActivateTrialView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+        job = get_object_or_404(Job, slug=kwargs['slug'], user=request.user)
+        
+        if job.expired_date:
+            raise Http404
+        else:
+            expiration = timezone.now() + timedelta(days=settings.TRIAL_DAYS)
+            job.expired_date = expiration.date()
+            job.save()
+            
+            messages.add_message(request, messages.INFO, f'You have success publish your job that will be in listing until {job.expired_date}')
+
+        return HttpResponseRedirect(reverse_lazy('jobs:detail', args=[job.slug]))
+
+
+def invoice_id_generator():
+    import random
+    import string
+    return ''.join([random.choice(string.ascii_letters + string.digits) for n in range(10)])
+
+
+class JobAskPaymentView(LoginRequiredMixin, TemplateView):
+    template_name = "jobs/job_payment.html"
+    
+    def get(self, request, **kwargs):
+        # What you want the button to do.
+        job = get_object_or_404(Job, slug=kwargs['slug'], user=request.user)
+        paypal_dict = {
+            "business": settings.BUSINESS_EMAIL,
+            "amount": settings.PREMIUM_PRICE,
+            "item_name": "Premium Job",
+            "invoice": invoice_id_generator(),
+            "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
+            "return": request.build_absolute_uri(reverse('jobs:detail', args=[kwargs['slug']])),
+            "cancel_return": request.build_absolute_uri(reverse('jobs:detail', args=[kwargs['slug']])),
+            "custom": settings.PREMIUM_PLAN,
+            "job": job.id,
+        }
+
+        # Create the instance.
+        form = PayPalPaymentsForm(initial=paypal_dict)
+        context = {"form": form}
+        job.save()
+        return self.render_to_response(context)
